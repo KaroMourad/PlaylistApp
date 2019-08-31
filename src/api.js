@@ -27,6 +27,7 @@ export function getPlaylists(setPlaylist)
         }
     })
     .catch(err => {
+        alert(err);
         console.log(err);
     })
 }
