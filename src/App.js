@@ -5,107 +5,49 @@ import { isEmpty } from './utils';
 import axios from "axios";
 import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
+import Player from './Player';
 
 loadProgressBar();
-
-// const Fs = require('fs')  
-// const Path = require('path')  
-// const Axios = require('axios')
-
-// async function downloadImage (file) {  
-//   const url = file.url;
-//   const path = Path.resolve(__dirname, 'files', file.name)
-//   const writer = Fs.createWriteStream(path)
-
-//   const response = await Axios({
-//     url,
-//     method: 'GET',
-//     responseType: 'stream'
-//   })
-
-//   response.data.pipe(writer)
-
-//   return new Promise((resolve, reject) => {
-//     writer.on('finish', resolve)
-//     writer.on('error', reject)
-//   })
-// }
- 
 
 function App() {
 
   const [playlist,setPlaylist] = useState({});
   const [played,setPlayed] = useState(false);
-  const [persentage,setPersentage] = useState(0);
-
-  const playPLaylist = () => 
-  { 
-    //....play
-  };
-
-  const stopPLaylist = () => 
-  { 
-    //...stop
-  };
-
-  const playOrStopPLaylist = () => 
-  { 
-    if(played) 
-    {
-      stopPLaylist();
-      setPlayed(false);
-    }
-    else 
-    {
-      playPLaylist();
-      setPlayed(true);
-    }
-  };
 
   useEffect(()=>{
     if(!isEmpty(playlist))
     {
-      // execute simultaneous requests 
-      axios.all([
-        playlist.files.forEach(file => {
-          
-          axios.get(file.url,
-            {
-              onDownloadProgress: progressEvent => {
-                setPersentage(
-                  parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))
-                );
-              },
-            }
-          )
-        })
-      ])
-      .then(responseArr => {
-        //this will be executed only when all requests are complete
-        console.log('prc', responseArr);
+      axios.post("http://localhost:7000/download", {files: playlist.files})
+      .then(()=> {
+        const confirm = window.confirm("playlist download complete, play?");
+        if(confirm) {
+          setPlayed(true);
+        }
+        else {
+          setPlaylist({});
+          setPlayed(false);
+        };
+      })
+      .catch(err =>{
+        alert(err);
       });
     }
   },[playlist]);
 
   return (
     <div className="App">
-      {!isEmpty(playlist) ?
-        <div>
-          <button onClick={playOrStopPLaylist}>
-            {played ? "Stop" : "Play"}
-          </button>
-          {//persentage !== 100 && <span>{persentage}%</span>
+      {
+       !played ? 
+        <>
+          {isEmpty(playlist) && 
+          <div>
+              <button onClick={()=>getPlaylists(setPlaylist)}>Get Playlists</button>
+            </div>
           }
-        </div>
-      : <div>
-          <button onClick={()=>getPlaylists(setPlaylist)}>Get Playlists</button>
-        </div>
+        </> : 
+      <Player files={playlist.files}/>
       }
     </div>
   );
 }
-
-
-
-
 export default App;
