@@ -45,7 +45,7 @@ function App() {
             </div>
           }
         </> : 
-      <Player files={playlist.files}/>
+      <Player files={playlist.files} screens={playlist.screens}/>
       }
     </div>
   );

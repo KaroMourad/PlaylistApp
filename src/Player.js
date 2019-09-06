@@ -7,11 +7,12 @@ const Player = (props) => {
     const [files,setFiles] = useState();
 
     useEffect(() => {
-        if(props.files.length>0) 
+        
+        if(props.files.length>0 && props.screens) 
         {
             setFiles(props.files);
         }
-    },[props.files]);
+    },[props.files,props.screens]);
 
     return files && files.length ? (
         files.map((file,i) => {
