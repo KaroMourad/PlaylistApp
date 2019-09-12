@@ -4,24 +4,21 @@ const path = "./files/";
 const Screen = (props) => {
     const {screens,name,type, startTime,showTime,interval} = props;
     const [display, setDisplay] = useState("none");
- 
+    
     const time = useRef(0);
     const videoRef = useRef(null);
 
-    const initTimeOut = () => {
-        clearTimeout(time);
-        time.current=0;
-    };
-
     useEffect(() => {
-        initTimeOut();
         time.current = setTimeout(() => {
             toBlock();
         },startTime);
+        return () => {
+            clearTimeout(time);
+        };
     },[]);
 
     const toBlock = () => {
-        initTimeOut();
+        clearTimeout(time);
         setDisplay("block");
         if(type.split("/")[0]==="video") {
             videoRef.current.play();
@@ -32,8 +29,8 @@ const Screen = (props) => {
     };
     
     const toNone = () => {
-        initTimeOut();
-        if(type.split("/")[0]==="video") {
+        clearTimeout(time);
+        if(type.split("/")[0] ==="video") {
             videoRef.current.pause();
             videoRef.current.currentTime = 0;
         }
@@ -43,14 +40,15 @@ const Screen = (props) => {
         },interval);
     };
 
-
     const scrWidth = screens.length;
     const left = (screens[0] === 1) ? "0px" : (screens[0] === 2) ? "720px" : "1440px";
-    return (
-            type.split("/")[0] === "image" ? 
-                <img  style={{position: "absolute", left:left, display: display,width: `${720*scrWidth}px`, height: `1080px`}} src={require(`${path + name}`)} alt={name}/>
+
+    return (type.split("/")[0] === "image" ? 
+                <img style={{position: "absolute", left:left, display: display,width: `${720*scrWidth}px`, height: `1080px`}}
+                        src={require(`${path + name}`)} alt={name} />
                 :
-                <video ref={videoRef} style={{position: "absolute", left:left, display: display,width: `${720*scrWidth}px`, height: `1080px`}} src={require(`${path + name}`)} alt={name}/>
+                <video ref={videoRef} style={{position: "absolute", left:left, display: display,width: `${720*scrWidth}px`, height: `1080px`}}
+                        src={require(`${path + name}`)} alt={name} />
     );
 };
 
