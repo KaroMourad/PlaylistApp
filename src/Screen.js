@@ -1,6 +1,9 @@
 import React,{useState,useEffect,useRef} from "react";
 const path = "./files/";
 
+const HEIGHT = 1080; // display height
+const WIDTH = 720; // one display width
+
 const Screen = (props) => {
     const {screens,name,type, startTime,showTime,interval} = props;
     const [display, setDisplay] = useState("none");
@@ -40,16 +43,22 @@ const Screen = (props) => {
         },interval);
     };
 
-    const scrWidth = screens.length;
-    const left = (screens[0] === 1) ? "0px" : (screens[0] === 2) ? "720px" : "1440px";
+    const styleFile = {
+        position: "absolute",
+        height: HEIGHT + "px",
+        objectFit: "cover",
+        left: (screens[0] === 1) ? "0px" : (screens[0] === 2) ? WIDTH + "px" : WIDTH*2 + "px",
+        display,
+        width: `${WIDTH*screens.length}px`
+    };
 
-    return (type.split("/")[0] === "image" ? 
-                <img style={{position: "absolute", left:left, display: display,width: `${720*scrWidth}px`, height: `1080px`}}
-                        src={require(`${path + name}`)} alt={name} />
+    return ( 
+        type.split("/")[0] === "image" ? 
+                <img style={styleFile} src={require(`${path + name}`)} alt={name} />
                 :
-                <video ref={videoRef} style={{position: "absolute", left:left, display: display,width: `${720*scrWidth}px`, height: `1080px`}}
-                        src={require(`${path + name}`)} alt={name} />
+                <video ref={videoRef} style={styleFile} src={require(`${path + name}`)} alt={name} />
     );
 };
 
 export default Screen;
+

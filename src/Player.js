@@ -3,38 +3,31 @@ import Screen from "./Screen";
 
 const Player = (props) => {
 
-    const [files,setFiles] = useState();
-
-    let sum = 0;
+    const [sum, setSum]  = useState(0);
 
     useEffect(() => {
         if(props.files.length>0) 
         {
-            
+            let tempSum = sum;
             props.files.forEach(f => {
                 if(f.screen.indexOf(1) !==-1){
-                    sum += f.showTime;
+                    tempSum += f.showTime;
                 }
             })
-            setFiles(props.files);
+            setSum(tempSum);
         }
     },[props.files]);
 
-    return files && files.length ? (
-        files.map((file,i) => {
+    return props.files && props.files.length ? (
+        props.files.map((file,i) => {
             let startTime = 0;
             for(let j = 0; j < i; j++ ) {
-                    for(let t = 0; t < files[j].screen.length; t++) {
-                        if(file.screen.indexOf(files[j].screen[t]) !==-1){
-                            startTime += files[j].showTime;
-                            break;
-                        }
-                    }
-                
+                if(props.files[j].screen.indexOf(file.screen[0]) !==-1){
+                    startTime += props.files[j].showTime;
+                }
             }
             let interval = sum - file.showTime;
         
-            console.log("i",i,"showTime",file.showTime,"startTime",startTime,"interval",interval)
             return (
                 <Screen 
                     key={i}
