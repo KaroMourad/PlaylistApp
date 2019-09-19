@@ -19,14 +19,7 @@ function App() {
     {
       axios.post("http://localhost:7000/download", {files: playlist.files})
       .then(()=> {
-        const confirm = window.confirm("playlist download complete, play?");
-        if(confirm) {
           setPlayed(true);
-        }
-        else {
-          setPlaylist({});
-          setPlayed(false);
-        };
       })
       .catch(err =>{
         alert(err);
@@ -37,15 +30,10 @@ function App() {
   return (
     <div className="App">
       {
-       !played ? 
-        <>
-          {isEmpty(playlist) && 
-          <div>
-              <button onClick={()=>getPlaylists(setPlaylist)}>Get Playlists</button>
-            </div>
-          }
-        </> : 
-      <Player files={playlist.files} screens={playlist.screens}/>
+        !played ? (
+            isEmpty(playlist) ? <button onClick={()=>getPlaylists(setPlaylist)}>Get Playlists</button> : null 
+          ) 
+          : <Player files={playlist.files} screens={playlist.screens}/>
       }
     </div>
   );

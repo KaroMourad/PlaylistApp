@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from "react";
-const path = "./files/";
+const path = "/files/";
 
 const HEIGHT = 1080; // display height
 const WIDTH = 720; // one display width
@@ -17,13 +17,14 @@ const Screen = (props) => {
         },startTime);
         return () => {
             clearTimeout(time);
+            videoRef.current = null;
         };
     },[]);
 
     const toBlock = () => {
         clearTimeout(time);
         setDisplay("block");
-        if(type.split("/")[0]==="video") {
+        if(videoRef && videoRef.current && type.split("/")[0]==="video") {
             videoRef.current.play();
         }
         time.current = setTimeout(() => {
@@ -33,11 +34,11 @@ const Screen = (props) => {
     
     const toNone = () => {
         clearTimeout(time);
-        if(type.split("/")[0] ==="video") {
+        setDisplay("none");
+        if(videoRef && videoRef.current && type.split("/")[0] ==="video") {
             videoRef.current.pause();
             videoRef.current.currentTime = 0;
         }
-        setDisplay("none");
         time.current = setTimeout(() => {
             toBlock();
         },interval);
@@ -48,15 +49,24 @@ const Screen = (props) => {
         height: HEIGHT + "px",
         objectFit: "cover",
         left: (screens[0] === 1) ? "0px" : (screens[0] === 2) ? WIDTH + "px" : WIDTH*2 + "px",
-        display,
+        display: display,
         width: `${WIDTH*screens.length}px`
     };
 
     return ( 
         type.split("/")[0] === "image" ? 
-                <img style={styleFile} src={require(`${path + name}`)} alt={name} />
+                <img 
+                    style={styleFile}
+                    display={display}
+                    src={`${path + name}`}
+                    alt={name} />
                 :
-                <video ref={videoRef} style={styleFile} src={require(`${path + name}`)} alt={name} />
+                <video 
+                    ref={videoRef}
+                    style={styleFile}
+                    display={display}
+                    src={`${path + name}`}
+                    alt={name} />
     );
 };
 

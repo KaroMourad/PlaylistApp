@@ -3,10 +3,11 @@ import Screen from "./Screen";
 
 const Player = (props) => {
 
-    const [sum, setSum]  = useState(0);
+    const [sum, setSum] = useState(0);
+    const [files,setFiles] = useState(null);
 
     useEffect(() => {
-        if(props.files.length>0) 
+        if(props.files && props.files.length>0) 
         {
             let tempSum = sum;
             props.files.forEach(f => {
@@ -15,18 +16,23 @@ const Player = (props) => {
                 }
             })
             setSum(tempSum);
+            setFiles(props.files);
         }
+        return () => {
+            setSum(0);
+            setFiles(null);
+        };
     },[props.files]);
 
-    return props.files && props.files.length ? (
-        props.files.map((file,i) => {
-            let startTime = 0;
-            for(let j = 0; j < i; j++ ) {
-                if(props.files[j].screen.indexOf(file.screen[0]) !==-1){
-                    startTime += props.files[j].showTime;
+    return files && files.length ? (
+            files.map((file,i) => {
+                let startTime = 0;
+                for(let j = 0; j < i; j++ ) {
+                    if(files[j].screen.indexOf(file.screen[0]) !==-1){
+                        startTime += files[j].showTime;
+                    }
                 }
-            }
-            let interval = sum - file.showTime;
+                let interval = sum - file.showTime;
         
             return (
                 <Screen 

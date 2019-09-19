@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 async function downloadImage (file) {  
     const url = file.url;
-    const path = Path.resolve(__dirname+"/src/", 'files', file.name)
+    const path = Path.resolve(__dirname+"/public/", 'files', file.name)
     const writer = Fs.createWriteStream(path)
   
     const response = await Axios({
