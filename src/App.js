@@ -27,11 +27,17 @@ function App() {
     }
   },[playlist]);
 
+
+  const getPlaylistInitialFunction = () => 
+  {
+    getPlaylists(setPlaylist);
+  };
+
   return (
     <div className="App">
       {
         !played ? (
-            isEmpty(playlist) ? <button onClick={()=>getPlaylists(setPlaylist)}>Get Playlists</button> : null 
+            isEmpty(playlist) ? <button onClick={getPlaylistInitialFunction}>Get Playlists</button> : null 
           ) 
           : <Player files={playlist.files} screens={playlist.screens}/>
       }

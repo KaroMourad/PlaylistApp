@@ -62,6 +62,7 @@ const Screen = (props) => {
                     alt={name} />
                 :
                 <video 
+                    loop
                     ref={videoRef}
                     style={styleFile}
                     display={display}
