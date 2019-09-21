@@ -21,13 +21,12 @@ export function getPlaylists(setPlaylist, current)
                         match = true;
                     }
                     tempPl = pl;
-
                 }
             })
         } else {
             throw new Error('no playlists');
         }
-        time = setTimeout(() => getPlaylists(setPlaylist, tempPl),10000);
+        time = setTimeout(() => { getPlaylists(setPlaylist, tempPl) },10000);
     })
     .catch(err => {
         alert(err);
