@@ -7,19 +7,20 @@ import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
 import Player from './Player';
 
-loadProgressBar();
+
 
 function App() {
 
   const [playlist,setPlaylist] = useState({});
-  const [played,setPlayed] = useState(false);
+  const [played,setPlayed] = useState(0);
 
   useEffect(()=>{
     if(!isEmpty(playlist))
     {
+      loadProgressBar();
       axios.post("http://localhost:7000/download", {files: playlist.files})
       .then(()=> {
-          setPlayed(true);
+          setPlayed(played + 1);
       })
       .catch(err =>{
         alert(err);

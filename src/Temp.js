@@ -20,7 +20,6 @@ const Temp = (props) =>
         });
 
         let interval = sum - file.showTime;
-        console.log("interval",i,interval)
 
         return (
             <Screen 
