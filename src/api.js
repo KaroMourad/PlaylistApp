@@ -28,8 +28,13 @@ export function getPlaylists(setPlaylist, current)
         }
         time = setTimeout(() => { getPlaylists(setPlaylist, tempPl) },10000);
     })
-    .catch(err => {
-        alert(err);
-        console.log(err);
+    .catch((err) => {
+        if(err.response && err.response.data.message){
+            alert(err.response.data.message);
+            console.log(err.response);
+        } else {
+            alert(err.message);
+            console.log(err);
+        }
     })
 }
