@@ -33,14 +33,13 @@ function App() {
   {
     getPlaylists(setPlaylist);
   };
-
   return (
     <div className="App">
       {
         !played ? (
             isEmpty(playlist) ? <button onClick={getPlaylistInitialFunction}>Get Playlists</button> : null 
           ) 
-          : <Player files={playlist.files} screens={playlist.screens}/>
+          : <Player files={playlist.files} screens={playlist.screens} ticker={playlist.playlist.ticker ? playlist.playlist.ticker : null}/>
       }
     </div>
   );

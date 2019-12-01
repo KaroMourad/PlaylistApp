@@ -1,8 +1,6 @@
 import React,{useState,useEffect,useRef} from "react";
+import { WIDTH, HEIGHT } from "./config";
 const path = "/files/";
-
-const HEIGHT = 1080; // display height
-const WIDTH = 720; // one display width
 
 const Screen = (props) => {
     const { screens, name, type, startTime, showTime, interval } = props;
@@ -63,7 +61,7 @@ const Screen = (props) => {
     {
         position: "absolute",
         height: HEIGHT + "px",
-        objectFit: "cover",
+        //objectFit: "cover",
         left: (screens[0] === 1) ? "0px" : (screens[0] === 2) ? WIDTH + "px" : WIDTH*2 + "px",
         display: display,
         width: `${WIDTH*screens.length}px`

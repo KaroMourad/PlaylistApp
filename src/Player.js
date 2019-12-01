@@ -4,7 +4,7 @@ import Temp from "./Temp";
 const Player = (props) => {
 
     const [files,setFiles] = useState(null);
-
+    
     useEffect( () => 
     {
         if(props.files && props.files.length>0) 
@@ -16,7 +16,7 @@ const Player = (props) => {
         };
     },[props.files]);
     
-    return files && files.length ? <Temp files={files} /> : null;
+    return files && files.length ? <Temp files={files} ticker={props.ticker} screens={props.screens}/> : null;
 };
 
 export default Player;
