@@ -1,0 +1,12 @@
+
+.ticker {
+    height: 70px !important;
+    top: calc( 100% - 70px) !important;
+    background: #3d3d3dad;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.ticker__element {
+    
+}
