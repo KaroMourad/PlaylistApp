@@ -36,7 +36,9 @@ app.post("/download", (req, res) =>
 {
 	if (req.body.files)
 	{
-		const files = req.body.files;
+
+		const files = typeof req.body.files === "string" ? JSON.parse(req.body.files) : req.body.files;
+
 		let promArr = [];
 		files.forEach(f =>
 		{
