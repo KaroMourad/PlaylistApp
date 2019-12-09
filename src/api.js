@@ -1,11 +1,11 @@
-import {branchId, baseUrl} from './config';
+import {branchId, apiUrl} from './config';
 import axios from 'axios';
 
 let time;
 export function getPlaylists(setPlaylist, current)
 {
     clearTimeout(time);
-    axios.get(baseUrl + '/playlists/' + branchId + '&:withFiles')
+    axios.get(apiUrl + '/playlists/' + branchId + '&:withFiles')
     .then(result => {
         let tempPl;
         if(result.data.length){

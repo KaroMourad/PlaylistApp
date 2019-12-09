@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { getPlaylists } from './api';
 import { isEmpty } from './utils';
+import { baseUrl } from './config';
 import axios from "axios";
 import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
@@ -20,7 +21,7 @@ const App = () =>
 		if (!isEmpty(playlist))
 		{
 			loadProgressBar();
-			axios.post(`http://localhost:7000/download`, { files: playlist.files })
+			axios.post(`${baseUrl}/download`, { files: playlist.files })
 				.then(res =>
 				{
 					setLoaded(true);
