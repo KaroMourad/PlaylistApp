@@ -13,7 +13,7 @@ export function getPlaylists(setPlaylist, current)
             let match = false;
             const playlists = result.data;
             playlists.forEach(pl => {
-                if(!match) {
+                if(!match && pl) {
                     const start = new Date(pl.playlist.startDate).valueOf();
                     const end = new Date(pl.playlist.endDate).valueOf();
                     if(dateNow >= start && dateNow <= end && (!current || current.playlist.updatedAt !== pl.playlist.updatedAt)){
