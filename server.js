@@ -46,7 +46,7 @@ app.post("/download", (req, res) =>
 			promArr.push(promise);
 		})
 		Promise.all(promArr)
-		.then(res =>
+		.then(result =>
 		{
 			res.send({ message: "ok" })
 		})

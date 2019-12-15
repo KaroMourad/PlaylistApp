@@ -6,4 +6,5 @@
 
 .ticker {
 	background: #79797954;
+    white-space: nowrap!important;
 }

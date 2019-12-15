@@ -1,18 +1,23 @@
 import React from "react";
-import Ticker from 'react-ticker'
+import Marquee from "react-smooth-marquee"
 
 const StuffAroundTicker = ({ ticker }) => 
 {
 	const { r, g, b, a } = ticker.color;
-	const {fontSize} = ticker;
+	const color = ticker.color ? `rgba(${r},${g},${b},${a})`: "#000000";
+	const fontSize = ticker.fontSize+"px";
 	return (
-		<Ticker>
-			{({ index }) => (
-				<div className="ticker" key={index} style={{ color: `rgba(${r},${g},${b},${a})`, fontSize}}>
-					{ticker.text}
-				</div>
-			)}
-		</Ticker>
+		<div
+			style={{
+				whiteSpace: 'nowrap',
+				color: color,
+				fontSize: fontSize
+			}}
+		>
+			<Marquee velocity="0.12">
+				{ticker.text}
+			</Marquee>
+		</div>
 	);
 };
 
