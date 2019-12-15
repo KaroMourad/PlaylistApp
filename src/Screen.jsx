@@ -1,5 +1,6 @@
 import React, { createRef } from "react";
 import { WIDTH, HEIGHT } from "./config";
+import {isEqual} from "lodash";
 const path = "/files/";
 
 class Screen extends React.Component 
@@ -17,11 +18,11 @@ class Screen extends React.Component
 	toBlock = () =>
 	{
 		this.reset();
-		this.setState({ display: "block" });
 		if (this.videoRef && this.videoRef.current && this.props.type.split("/")[0] === "video")
 		{
 			this.videoRef.current.play();
 		}
+		this.setState({ display: "block" });
 		this.time = setTimeout(this.toNone, this.props.showTime);
 	}
 
@@ -51,9 +52,10 @@ class Screen extends React.Component
 
 	componentDidUpdate(prevProps) 
 	{
-		if(prevProps !== this.props) 
+		if(!isEqual(prevProps, this.props)) 
 		{
-			this.setState({ display: "none" },() => {
+			this.setState({ display: "none" }, () =>
+			{
 				this.reset();
 				this.time = setTimeout(this.toBlock, this.props.startTime);
 			});			
