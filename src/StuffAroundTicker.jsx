@@ -9,6 +9,7 @@ const StuffAroundTicker = ({ ticker }) =>
 	return (
 		<div
 			style={{
+				overflow: "hidden",
 				whiteSpace: 'nowrap',
 				color: color,
 				fontSize: fontSize
