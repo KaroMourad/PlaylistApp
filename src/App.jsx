@@ -1,13 +1,20 @@
 import React from 'react';
 import './App.css';
 import { getPlaylists } from './api';
-import { isEmpty } from './utils';
 import { baseUrl } from './config';
 import axios from "axios";
 import { loadProgressBar } from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
 import Player from './Player';
 import { isEqual } from "lodash";
+
+const isEmpty = (object) => { 
+    if(Object.keys(object).length === 0) 
+    {
+        return true;
+    }
+    else return false;
+};
 
 class App extends React.Component
 {
@@ -28,7 +35,7 @@ class App extends React.Component
 		if (this.state.playlist && !isEmpty(this.state.playlist) && !isEqual(this.state.playlist, prevState.playlist))
 		{
 			loadProgressBar();
-			axios.post(`${baseUrl}/download`, { files: playlist.files })
+			axios.post(`${baseUrl}/download`, { files: this.state.playlist.files })
 				.then(res =>
 				{
 					this.setState({
@@ -51,12 +58,11 @@ class App extends React.Component
 		{
 			if (playlist)
 			{
-				this.setState({
-					playlist: playlist
-				})
+				this.setState({	playlist })
 			}
 		});
 	};
+
 	render()
 	{
 		const { loaded, files, screens, ticker } = this.state;
