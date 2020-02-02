@@ -30,6 +30,11 @@ class App extends React.Component
 		}
 	}
 
+	componentDidMount() 
+	{
+		this.getPlaylistInitialFunction();
+	}
+
 	componentDidUpdate(prevProps, prevState) 
 	{
 		if (this.state.playlist && !isEmpty(this.state.playlist) && !isEqual(this.state.playlist, prevState.playlist))
@@ -68,8 +73,7 @@ class App extends React.Component
 		const { loaded, files, screens, ticker } = this.state;
 		return (
 			<div className="App">
-				{loaded ? null : <button onClick={this.getPlaylistInitialFunction}>Get Playlists</button>}
-				{files && screens && ticker ?
+				{loaded && files && screens && ticker ?
 					<Player
 						files={files}
 						screens={screens}

@@ -50,9 +50,14 @@ class Player extends React.Component
 	{
 		const { screens, ticker, files } = this.state;
 		const list = screens && ticker && files ? this.modifyData(this.state.files) : null;
-
+		const styleContainer = {
+			height: `${HEIGHT}px`,
+			width: `${WIDTH * screens}px`,
+			position: "relative",
+			background: "#000"
+		};
 		return screens && ticker && files ? (
-			<div style={{ height: `${HEIGHT}px`, width: `${WIDTH * screens}px`, position: "relative" }}>
+			<div style={styleContainer}>
 				{list}
 				{ticker && ticker.text ?
 					<div className="tickerContainer">

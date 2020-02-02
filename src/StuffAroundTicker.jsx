@@ -4,7 +4,7 @@ import Marquee from "react-smooth-marquee"
 const StuffAroundTicker = ({ ticker }) => 
 {
 	const { r, g, b, a } = ticker.color;
-	const color = ticker.color ? `rgba(${r},${g},${b},${a})`: "#000000";
+	const color = ticker.color ? `rgba(${r},${g},${b},${a})`: "#fff";
 	const fontSize = ticker.fontSize+"px";
 	return (
 		<div

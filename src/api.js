@@ -30,7 +30,7 @@ export function getPlaylists(setPlaylist, current)
 				})
 			} else
 			{
-				throw new Error('no playlists');
+				throw new Error('no playlist');
 			}
 			time = setTimeout(() => { getPlaylists(setPlaylist, tempPl) }, 10000);
 		})

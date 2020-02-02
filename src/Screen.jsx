@@ -22,15 +22,18 @@ class Screen extends React.Component
 		{
 			this.videoRef.current.play();
 		}
-		this.setState({ display: "block" });
-		this.time = setTimeout(this.toNone, this.props.showTime);
+		this.setState({ display: "block" },() => {
+			this.time = setTimeout(this.toNone, this.props.showTime);
+		});
 	}
 
 	toNone = () =>
 	{
 		this.reset();
-		this.setState({ display: "none" });
-		this.time = setTimeout(this.toBlock, this.props.interval);
+		this.setState({ display: "none" },() => {
+			this.time = setTimeout(this.toBlock, this.props.interval);
+		});
+		
 	}
 
 	reset = () => 
@@ -54,19 +57,16 @@ class Screen extends React.Component
 	{
 		if(!isEqual(prevProps, this.props)) 
 		{
-			this.setState({ display: "none" }, () =>
-			{
-				this.reset();
-				this.time = setTimeout(this.toBlock, this.props.startTime);
-			});			
+			this.setState({ display: "none" });
+			this.reset();
+			this.time = setTimeout(this.toBlock, this.props.startTime);		
 		}
 	}
 
 	componentWillUnmount() 
 	{
-		this.setState({ display: "none" },() => {
-			this.reset();
-		});
+		this.setState({ display: "none" });
+		this.reset();
 	}
 
 	render()
@@ -76,7 +76,7 @@ class Screen extends React.Component
 		const styleFile = {
 			position: "absolute",
 			height: HEIGHT + "px",
-			//objectFit: "cover",
+			objectFit: "contain",
 			display: this.state.display,
 			left: (screens[0] === 1) ? "0px" : (screens[0] === 2) ? WIDTH + "px" : WIDTH * 2 + "px",
 			width: `${WIDTH * screens.length}px`
