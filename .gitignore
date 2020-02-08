@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-/public/files/
+/public/files/*
+!/public/files/.gitkeep
 # testing
 /coverage
 
