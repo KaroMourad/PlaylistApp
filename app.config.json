@@ -1,14 +1,14 @@
 {
-  "apps" : [
+  "apps": [
     {
       "name": "playlistApp",
       "script": "node_modules/react-scripts/bin/react-scripts.js",
-      "args" : "start"
+      "args": "start"
     },
     {
       "name": "playlistAppServer",
       "script": "node",
-      "args" : "server.js"
+      "args": "server.js"
     }
   ]
 }
